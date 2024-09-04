@@ -7,7 +7,6 @@ import os
 from image_utils import resize_image_to_kb
 
 
-
 def base64_save(base64_image_data, save_path, kb=None):
     # 解码 Base64 数据并保存为 PNG 文件
     img_data = base64.b64decode(base64_image_data)
@@ -20,8 +19,18 @@ def base64_save(base64_image_data, save_path, kb=None):
         img.save(save_path, "PNG")
 
 
+def get_img_base64(img_path):
+    # 读取图像文件并转换为Base64编码
+    with open(img_path, 'rb') as f:
+        base64_data = base64.b64encode(f.read())
+        s = base64_data.decode()
+    return s
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="HivisionIDPhotos 证件照制作推理程序。")
+    parser = argparse.ArgumentParser(
+        description="HivisionIDPhotos 证件照制作推理程序。"
+    )
 
     parser.add_argument(
         "-u", "--url", help="API 服务的 URL", default="http://127.0.0.1:8080"
@@ -42,15 +51,16 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    url = f"{args.url}/{args.type}"  # 替换为实际的接口 URL
+    url = f"{args.url}/{args.type}"  # 替换为实际的接口URL
     files = {
-        "input_image": (open(args.input_image_dir, "rb"))
-    }  # 替换为实际的文件路径和文件名
+        # 替换为实际的文件路径和文件名
+        # 'input_image': (open(args.input_image_dir, 'rb'))
+    }
     data = {
         "size": args.size,
         "color": args.color,
+        "input_image_base64": get_img_base64(args.input_image_dir),
     }
-
     response = requests.post(url, data=data, files=files)
 
     if response.status_code == 200:
@@ -60,7 +70,6 @@ if __name__ == "__main__":
 
             status = response_json["status"]
             if status:
-
                 base64_image_data_standard = response_json["img_output_standard"]
                 base64_image_data_standard_hd = response_json["img_output_standard_hd"]
 

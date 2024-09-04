@@ -18,22 +18,22 @@
 
 > **相关项目**：
 >
-> - [SwanLab](https://github.com/SwanHubX/SwanLab)：训练人像抠图模型全程用它来分析和监控，以及和实验室同学协作交流，大幅提升了训练效率。
+> -   [SwanLab](https://github.com/SwanHubX/SwanLab)：训练人像抠图模型全程用它来分析和监控，以及和实验室同学协作交流，大幅提升了训练效率。
 
 <br>
 
 # 🤩 项目更新
 
-- 在线体验： [![SwanHub Demo](https://img.shields.io/static/v1?label=Demo&message=SwanHub%20Demo&color=blue)](https://swanhub.co/ZeYiLin/HivisionIDPhotos/demo)、[![Spaces](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue)](https://huggingface.co/spaces/TheEeeeLin/HivisionIDPhotos)
-- 2024.9.2: 更新**调整照片 KB 大小**
-- 2023.12.1: 更新**API 部署（基于 fastapi）**
-- 2023.6.20: 更新**预设尺寸菜单**
-- 2023.6.19: 更新**排版照**
-- 2023.6.13: 更新**中心渐变色**
-- 2023.6.11: 更新**上下渐变色**
-- 2023.6.8: 更新**自定义尺寸**
-- 2023.6.4: 更新**自定义底色、人脸检测 Bug 通知**
-- 2023.5.10: 更新**不改尺寸只换底**
+-   在线体验： [![SwanHub Demo](https://img.shields.io/static/v1?label=Demo&message=SwanHub%20Demo&color=blue)](https://swanhub.co/ZeYiLin/HivisionIDPhotos/demo)、[![Spaces](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue)](https://huggingface.co/spaces/TheEeeeLin/HivisionIDPhotos)
+-   2024.9.2: 更新**调整照片 KB 大小**
+-   2023.12.1: 更新**API 部署（基于 fastapi）**
+-   2023.6.20: 更新**预设尺寸菜单**
+-   2023.6.19: 更新**排版照**
+-   2023.6.13: 更新**中心渐变色**
+-   2023.6.11: 更新**上下渐变色**
+-   2023.6.8: 更新**自定义尺寸**
+-   2023.6.4: 更新**自定义底色、人脸检测 Bug 通知**
+-   2023.5.10: 更新**不改尺寸只换底**
 
 # Overview
 
@@ -62,10 +62,10 @@ HivisionIDPhoto 旨在开发一种实用的证件照智能制作算法。
 
 # 🔧 环境安装与依赖
 
-- Python >= 3.7（项目主要测试在 python 3.10）
-- onnxruntime
-- OpenCV
-- Option: Linux, Windows, MacOS
+-   Python >= 3.7（项目主要测试在 python 3.10）
+-   onnxruntime
+-   OpenCV
+-   Option: Linux, Windows, MacOS
 
 **1. 克隆项目**
 
@@ -113,19 +113,19 @@ python deploy_api.py
 证件照制作（输入 1 张照片，获得 1 张标准证件照和 1 张高清证件照的 4 通道透明 png）：
 
 ```bash
-python requests_api.py -u http://127.0.0.1:8080 -i images/test.jpg -o ./idphoto.png -s '(413,295)'
+python requests_api.py -u http://127.0.0.1:8080 -i ./images/test5.png -o ./dist/idphoto.png -s (413,295)
 ```
 
 增加底色（输入 1 张 4 通道透明 png，获得 1 张增加了底色的图像）：
 
 ```bash
-python requests_api.py -u http://127.0.0.1:8080 -t add_background -i ./idphoto.png -o ./idhoto_ab.jpg  -c '(0,0,0)' -k 30
+python requests_api.py -u http://127.0.0.1:8080 -t add_background -i ./images/idphoto_hd.png -o ./dist/idhoto_ab.jpg -s (413,295) -c (212,140,86)
 ```
 
 得到六寸排版照（输入 1 张 3 通道照片，获得 1 张六寸排版照）：
 
 ```bash
-python requests_api.py -u http://127.0.0.1:8080 -t generate_layout_photos -i ./idhoto_ab.jpg -o ./idhoto_layout.jpg  -s '(413,295)' -k 200
+python requests_api.py -u http://127.0.0.1:8080 -t generate_layout_photos -i ./images/idhoto_ab.jpg -o ./dist/idhoto_layout.jpg  -s (413,295)
 ```
 
 <br>
