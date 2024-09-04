@@ -5,6 +5,7 @@ from io import BytesIO
 import argparse
 import os
 
+
 def base64_save(base64_image_data, save_path):
     # 解码Base64数据并保存为PNG文件
     img_data = base64.b64decode(base64_image_data)
@@ -13,12 +14,26 @@ def base64_save(base64_image_data, save_path):
     img.save(save_path, "PNG")
 
 
+def get_img_base64(img_path):
+    # 读取图像文件并转换为Base64编码
+    with open(img_path, 'rb') as f:
+        base64_data = base64.b64encode(f.read())
+        s = base64_data.decode()
+    return s
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="HivisionIDPhotos证件照制作推理程序。")
 
-    parser.add_argument("-u", "--url", help="API服务的URL", default="http://127.0.0.1:8080")
-    parser.add_argument("-t", "--type", help="请求API的种类，有idphoto、add_background和generate_layout_photos可选",
-                        default="idphoto")
+    parser.add_argument(
+        "-u", "--url", help="API服务的URL", default="http://127.0.0.1:8080"
+    )
+    parser.add_argument(
+        "-t",
+        "--type",
+        help="请求API的种类，有idphoto、add_background和generate_layout_photos可选",
+        default="idphoto",
+    )
     parser.add_argument("-i", "--input_image_dir", help="输入图像路径", required=True)
     parser.add_argument("-o", "--output_image_dir", help="保存图像路径", required=True)
     parser.add_argument("-s", "--size", help="证件照尺寸", default="(413,295)")
@@ -27,9 +42,15 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     url = f"{args.url}/{args.type}"  # 替换为实际的接口URL
-    files = {'input_image': (open(args.input_image_dir, 'rb'))}  # 替换为实际的文件路径和文件名
-    data = {"size": args.size, "color": args.color}
-
+    files = {
+        # 替换为实际的文件路径和文件名
+        # 'input_image': (open(args.input_image_dir, 'rb'))
+    }
+    data = {
+        "size": args.size,
+        "color": args.color,
+        "input_image_base64": get_img_base64(args.input_image_dir),
+    }
     response = requests.post(url, data=data, files=files)
 
     if response.status_code == 200:
@@ -39,7 +60,6 @@ if __name__ == "__main__":
 
             status = response_json["status"]
             if status:
-
                 base64_image_data_standard = response_json["img_output_standard"]
                 base64_image_data_standard_hd = response_json["img_output_standard_hd"]
 
@@ -51,7 +71,6 @@ if __name__ == "__main__":
                 new_file_name = file_name + "_hd" + file_extension
 
                 base64_save(base64_image_data_standard_hd, new_file_name)
-
 
                 print(f"标准照保存至'{args.output_image_dir}'，高清照保存至'{new_file_name}'")
 

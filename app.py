@@ -87,7 +87,7 @@ def idphoto_inference(input_image,
 
     # 如果检测到人脸数量不等于1
     if status == 0:
-        result_messgae = {
+        result_message = {
             img_output_standard: gr.update(value=None),
             img_output_standard_hd: gr.update(value=None),
             notification: gr.update(value="人脸数量不等于1", visible=True)
@@ -121,13 +121,13 @@ def idphoto_inference(input_image,
                                                         height=idphoto_json["size"][0],
                                                         width=idphoto_json["size"][1])
 
-        result_messgae = {
+        result_message = {
             img_output_standard: result_image_standard,
             img_output_standard_hd: result_image_hd,
             img_output_layout: result_layout_image,
             notification: gr.update(visible=False)}
 
-    return result_messgae
+    return result_message
 
 
 if __name__ == "__main__":

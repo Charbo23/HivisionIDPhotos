@@ -104,19 +104,19 @@ python deploy_api.py
 证件照制作（输入1张照片，获得1张标准证件照和1张高清证件照的4通道透明png）：
 
 ```bash
-python requests_api.py -u http://127.0.0.1:8080 -i test.jpg -o ./idphoto.png -s '(413,295)'
+python requests_api.py -u http://127.0.0.1:8080 -i ./images/test5.png -o ./dist/idphoto.png -s (413,295) 
 ```
 
 增加底色（输入1张4通道透明png，获得1张增加了底色的图像）：
 
 ```bash
-python requests_api.py -u http://127.0.0.1:8080 -t add_background -i ./idphoto.png -o ./idhoto_ab.jpg  -c '(0,0,0)'
+python requests_api.py -u http://127.0.0.1:8080 -t add_background -i ./images/idphoto_hd.png -o ./dist/idhoto_ab.jpg -s (413,295) -c (212,140,86)
 ```
 
 得到六寸排版照（输入1张3通道照片，获得1张六寸排版照）：
 
 ```bash
-python requests_api.py -u http://127.0.0.1:8080 -t generate_layout_photos -i ./idhoto_ab.jpg -o ./idhoto_layout.jpg  -s '(413,295)'
+python requests_api.py -u http://127.0.0.1:8080 -t generate_layout_photos -i ./images/idhoto_ab.jpg -o ./dist/idhoto_layout.jpg  -s (413,295)
 ```
 
 
